@@ -1,4 +1,6 @@
 from django import forms
+from unicodedata import category
+
 from .models import *
 
 class BlogForm(forms.ModelForm):
@@ -18,6 +20,19 @@ class BlogForm(forms.ModelForm):
         })
     )
 
+    image = forms.ImageField(
+        label="Upload an image",
+        required=False,
+        widget=forms.ClearableFileInput()
+    )
+
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        required=False,
+        label="Select Category",
+        widget=forms.Select()
+    )
+
     class Meta:
         model = BlogPost
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'image', 'category']

@@ -10,7 +10,11 @@
             <h2>{{ blog.title }}</h2>
             <div class="article-date">{{ blog.created_on|date:"F j, Y" }}</div>
             <p>{{ blog.content|truncatechars:200 }}</p>
-            <div class="article-image-delete"></div>
+            <div class="article-image-delete">
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}">
+                {% endif %}
+            </div>
         </div>
     </div>
     <form method="post">

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from unicodedata import category
+
 from .forms import BlogForm
 from .models import BlogPost
 
@@ -18,15 +20,20 @@ def blogposts(request):
 
 def create(request):
     form = BlogForm()
+
     if request.method == "POST":
-        form = BlogForm(request.POST)
+        form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
+            image = form.cleaned_data['image']
+            category = form.cleaned_data['category']
 
             blog = BlogPost(
                 title = title,
-                content = content
+                content = content,
+                image = image,
+                category = category
             )
             blog.save()
 
@@ -41,7 +48,7 @@ def edit(request, pk):
     form = BlogForm(instance=blog)
 
     if request.method=='POST':
-        form = BlogForm(request.POST, instance=blog)
+        form = BlogForm(request.POST, request.FILES, instance=blog)
         if form.is_valid():
             form.save()
             return redirect('home')
@@ -53,6 +60,7 @@ def edit(request, pk):
 
 def delete(request, pk):
     blog = BlogPost.objects.get(id = pk)
+
     if request.method == 'POST':
         blog.delete()
         return redirect('home')

@@ -11,11 +11,21 @@
             {% for blog in blogs %}
                 <div class="article">
                     <div class="article-image">
-
+                        {% if blog.image %}
+                            <img src="{{ blog.image.url }}">
+                        {% endif %}
                     </div>
                     <div class="article-content">
                         <h2>{{ blog.title }}</h2>
-                        <div class="article-date" >{{ blog.created_on|date:"F j, Y" }}</div>
+                        <div class="article-details">
+                            <div class="article-date" >{{ blog.created_on|date:"F j, Y" }}</div>
+                            {% if blog.category %}
+                                <div class="article-dot">
+                                    &middot;
+                                </div>
+                                <p class="article-category">{{ blog.category.name }}</p>
+                            {% endif %}
+                        </div>
                         <p>{{ blog.content|truncatechars:200 }}</p>
                         <div class="article-button">
                             <a class="btn btn-outline-primary" href="{% url 'edit' blog.id %}">Edit</a>

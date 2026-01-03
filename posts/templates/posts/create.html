@@ -6,7 +6,7 @@
     <div class="topbar">
         <h1 class="title">Create Blog Post</h1>
     </div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn btn-primary">Submit Your Post</button>
