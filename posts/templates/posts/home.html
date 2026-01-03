@@ -1,0 +1,30 @@
+{% extends 'posts\base.html'%}
+{% block content %}
+    <div class="main-container">
+       <div class="topbar">
+           <h1 class="title">Welcome to our Blog!</h1>
+        </div>
+        {% if blogscount == 0 %}
+            <p>There are no blog posts yet</p>
+        {% else %}
+        <div>
+            {% for blog in blogs %}
+                <div class="article">
+                    <div class="article-image">
+
+                    </div>
+                    <div class="article-content">
+                        <h2>{{ blog.title }}</h2>
+                        <div class="article-date" >{{ blog.created_on|date:"F j, Y" }}</div>
+                        <p>{{ blog.content|truncatechars:200 }}</p>
+                        <div class="article-button">
+                            <a class="btn btn-outline-primary" href="{% url 'edit' blog.id %}">Edit</a>
+                            <a class="btn btn-outline-danger" href="{% url 'delete' blog.id %}">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
