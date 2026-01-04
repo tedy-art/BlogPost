@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'posts', # first app for posts creations, reading, updating and deletions
+    'users', # second app for only authentications of user sign in or sign up
     "crispy_forms",
     "crispy_bootstrap4",
 ]
