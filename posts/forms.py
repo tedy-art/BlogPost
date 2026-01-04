@@ -33,6 +33,13 @@ class BlogForm(forms.ModelForm):
         widget=forms.Select()
     )
 
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        required=False,
+        label="Select Tags",
+        widget=forms.SelectMultiple()
+    )
+
     class Meta:
         model = BlogPost
-        fields = ['title', 'content', 'image', 'category']
+        fields = ['title', 'content', 'image', 'category', 'tags']
