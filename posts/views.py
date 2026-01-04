@@ -28,6 +28,7 @@ def create(request):
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
             category = form.cleaned_data['category']
+            tags = form.cleaned_data['tags']
 
             blog = BlogPost(
                 title = title,
@@ -36,6 +37,7 @@ def create(request):
                 category = category
             )
             blog.save()
+            blog.tags.set(tags)
 
             return redirect('blogposts')
 
