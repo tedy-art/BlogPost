@@ -15,7 +15,12 @@ def home(request):
     return render(request, 'posts/home.html', context)
 
 def blogposts(request):
-    context = {}
+    blogs = BlogPost.objects.all().order_by('-created_on')
+    blogscount = blogs.count()
+    context = {
+        'blogs': blogs,
+        'blogscount': blogscount
+    }
     return render(request, 'posts/blogposts.html', context)
 
 def create(request):
@@ -71,3 +76,8 @@ def delete(request, pk):
         'blog': blog
     }
     return render(request, 'posts/delete.html', context)
+
+def details(request, pk):
+    blog = BlogPost.objects.get(id=pk)
+    context = {'blog': blog}
+    return render(request, 'posts/details.html', context)
