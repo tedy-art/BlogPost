@@ -5,8 +5,42 @@
             <h1 class="title">Blog posts user1</h1>
             <a class="btn btn-primary" href="{% url 'create' %}">Create Blog Post</a>
         </div>
+        {% if blogcount==0 %}
+            <p>There are no blog posts yet!!</p>
+        {% else %}
         <div>
-            Space for all our blog posts!
+            {% for blog in blogs %}
+            <div class="article">
+                <div class="article-image">
+                    {% if blog.image %}
+                        <img src="{{ blog.image.url }}">
+                    {% endif %}
+                </div>
+                <div class="article-content">
+                    <h2>{{ blog.title }}</h2>
+
+                    <div class="article-details">
+                        <div class="article-date">{{ blog.created_on|date:"F j, Y" }}</div>
+                        {% if blog.category %}
+                            <div class="article-dot">&middot;</div>
+                            <p class="article-category">{{ blog.category.name }}</p>
+                        {% endif %}
+                    </div>
+                    <p>{{ blog.content|truncatechars:200 }}</p>
+                    {% if blog.tags.all %}
+                        <div class="tag-holder">
+                            {% for tag in blog.tags.all %}
+                                <span class="article-tags">#{{tag.name}}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="article-buttons">
+                        <a class="btn btn-outline-primary" href="{% url 'edit' blog.id %}">Edit</a>
+                        <a class="btn btn-outline-danger" href="{% url 'delete' blog.id %}">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
